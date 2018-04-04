@@ -91,7 +91,7 @@ describe('catharsis', function() {
 
 		it('should pass the specified options to the parser', function() {
 			function jsdoc() {
-				catharsis.parse('number|string', {jsdoc: true});
+				catharsis.parse('number|string', { jsdoc: true });
 			}
 
 			jsdoc.should.not.throw();
@@ -107,8 +107,8 @@ describe('catharsis', function() {
 
 		it('should use the JSDoc cache when JSDoc mode is enabled', function() {
 			// parse twice to make sure we're getting a cached version
-			var baz = catharsis.parse('baz', {jsdoc: true});
-			baz = catharsis.parse('baz', {jsdoc: true});
+			var baz = catharsis.parse('baz', { jsdoc: true });
+			baz = catharsis.parse('baz', { jsdoc: true });
 
 			baz.jsdoc.should.equal(true);
 		});
@@ -134,7 +134,7 @@ describe('catharsis', function() {
 
 		it('should throw an error when given invalid input if validation is enabled', function() {
 			function invalid() {
-				catharsis.stringify(invalidParsedType, {validate: true});
+				catharsis.stringify(invalidParsedType, { validate: true });
 			}
 
 			invalid.should.throw();
@@ -225,7 +225,7 @@ describe('catharsis', function() {
 		};
 
 		it('should pass the specified options to the stringifier', function() {
-			var string = catharsis.stringify(typeApp, {htmlSafe: true});
+			var string = catharsis.stringify(typeApp, { htmlSafe: true });
 
 			string.should.equal('Array.&lt;string>');
 		});
@@ -291,7 +291,7 @@ describe('catharsis', function() {
 
 		it('should throw an error when a language with no resources is specified', function() {
 			function noResources() {
-				catharsis.describe(nullParsedType, {language: 'qq'});
+				catharsis.describe(nullParsedType, { language: 'qq' });
 			}
 
 			noResources.should.throw();

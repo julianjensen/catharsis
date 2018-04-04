@@ -8,8 +8,8 @@ var TAG_OPEN = '<foo class="code-class">';
 var TAG_CLOSE = '</foo>';
 
 function addTags(string) {
-	var formatParams = [string];
-	var matches = string.match(/\%s/g);
+	var formatParams = [ string ];
+	var matches = string.match(/%s/g);
 
 	// tags must be balanced
 	if (matches.length % 2 !== 0) {

@@ -18,11 +18,17 @@ var defaultModifierText = {
 	repeatable: ''
 };
 
-function describeIt(expression, parsedType, expected, options) {
+function describeIt(expression, parsedType, expected, options, debug) {
 	var actual;
 
 	expected.extended.modifiers = _.defaults(expected.extended.modifiers, defaultModifierText);
 	actual = describer(parsedType, options);
+
+    if ( debug && !eql( expected, actual ) ) {
+        console.log( 'expected:', JSON.stringify( expected, null, 4 ) );
+        console.log( 'describer:', JSON.stringify( actual, null, 4 ) );
+        console.log( `equal? ${eql( expected, actual )}\n` );
+    }
 
 	if (!eql(actual, expected)) {
 		throw new Error(util.format('type expression "%s" was described as %j; expected %j',
@@ -35,12 +41,20 @@ function checkDescribedTypes(filepath, options) {
 	var types = require(filepath);
 
 	var errors = [];
+	var debug = filepath.includes( 'xyz' );
 
 	types.forEach(function(type) {
 		try {
-			parsedType = parse(type.expression, options);
-			describeIt(type.expression, parsedType, type.described.en, options);
-		} catch(e) {
+			parsedType = parse(type.newExpression || type.expression, options);
+			if ( debug ) {
+                console.log( 'SUCCESS: ' + ( type.newExpression || type.expression ) );
+                console.log( 'parsedType:', parsedType );
+            }
+			describeIt(type.expression, parsedType, type.described.en, options, debug);
+		} catch (e) {
+            if ( debug ) {
+ console.error( 'FAIL: ' + ( type.newExpression || type.expression ) ); 
+}
 			errors.push(e.message);
 		}
 	});
@@ -63,7 +77,7 @@ describe('describe', function() {
 
 	function tester(specPath, basename, options) {
 		it('can describe types in the "' + basename + '" spec', function() {
-			checkDescribedTypes(path.join(specPath, basename), options);
+			checkDescribedTypes(path.join(specPath, basename), Object.assign( options, { jsdoc: true } ) );
 		});
 	}
 

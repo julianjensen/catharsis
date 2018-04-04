@@ -6,7 +6,7 @@ module.exports = [
 	{
 		description: 'type application',
 		expression: 'Array.<Foo>',
-		newExpression: 'Array.&lt;<a href="Foo.html" class="my-class">Foo</a>>',
+		expected: 'Array.&lt;<a href="Foo.html" class="my-class">Foo</a>>',
 		parsed: {
 			type: Types.TypeApplication,
 			expression: {
@@ -34,7 +34,7 @@ module.exports = [
 	{
 		description: 'name expression for a class within a module',
 		expression: 'module:foo/bar/baz~Qux',
-		newExpression: '<a href="foobarbazqux.html" class="my-class">module:foo/bar/baz~Qux</a>',
+		expected: '<a href="foobarbazqux.html" class="my-class">module:foo/bar/baz~Qux</a>',
 		parsed: {
 			type: Types.NameExpression,
 			name: 'module:foo/bar/baz~Qux'

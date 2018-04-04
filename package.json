@@ -22,8 +22,12 @@
     "node": ">= 0.10"
   },
   "scripts": {
-    "prepublish": "./node_modules/pegjs/bin/pegjs ./lib/parser.pegjs",
-    "test": "./node_modules/mocha/bin/mocha"
+    "prepublishOnly": "./node_modules/pegjs/bin/pegjs ./lib/parser.pegjs",
+    "test": "./node_modules/mocha/bin/mocha",
+    "lint": "eslint --ignore-pattern lib/parser.js \"{lib,test}/**/*.js\"",
+    "fixlint": "eslint --fix --ignore-pattern lib/parser.js \"{lib,test}/**/*.js\"",
+    "build": "./node_modules/pegjs/bin/pegjs ./lib/parser.pegjs",
+    "prepare": "npm run build && npm run lint && npm run test"
   },
   "license": "MIT"
 }

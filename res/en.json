@@ -88,5 +88,33 @@
 			"many": "or <%= element %>) <%= suffix %>"
 		}
 	},
+    "intersection": {
+        "first": {
+            "one": "<%= prefix %> <%= element %> <%= suffix %>",
+            "two": "<%= prefix %> (<%= element %> ",
+            "many": "<%= prefix %> (<%= element %>, "
+        },
+        "middle": {
+            "many": "<%= element %>, "
+        },
+        "last": {
+            "two": "and <%= element %>) <%= suffix %>",
+            "many": "and <%= element %>) <%= suffix %>"
+        }
+    },
+    "tuple": {
+        "first": {
+            "one": "<%= prefix %> [<%= element %>] <%= suffix %>",
+            "two": "<%= prefix %> [<%= element %> ",
+            "many": "<%= prefix %> [<%= element %>, "
+        },
+        "middle": {
+            "many": "<%= element %>, "
+        },
+        "last": {
+            "two": "and <%= element %>] <%= suffix %>",
+            "many": "and <%= element %>] <%= suffix %>"
+        }
+    },
 	"unknown": "unknown"
 }

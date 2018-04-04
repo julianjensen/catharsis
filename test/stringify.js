@@ -11,8 +11,9 @@ var util = require('util');
 
 function stringifyIt(item, options) {
 	var string = stringify(item.parsed, options);
-	var expression = item.newExpression || item.expression;
+	var expression = item.expected || item.newExpression || item.expression;
 	if (string !== expression) {
+        // console.log( `stringified: "${string}", expr: "${expression}"` );
 		throw new Error(util.format('type expression "%s" was stringified as "%s"', expression,
 			string));
 	}
@@ -20,7 +21,7 @@ function stringifyIt(item, options) {
 	if (options.validate === undefined || options.validate === true) {
 		try {
 			parse(string, options);
-		} catch(e) {
+		} catch (e) {
 			throw new Error(util.format('unable to parse string "%s", created from %j: %s', string,
 				item.parsed, e.message));
 		}
@@ -35,7 +36,7 @@ function checkStringifiedTypes(filepath, options) {
 	types.forEach(function(type) {
 		try {
 			stringifyIt(type, options);
-		} catch(e) {
+		} catch (e) {
 			errors.push(e.message);
 		}
 	});
@@ -62,8 +63,8 @@ describe('stringify', function() {
 	}
 
 	helper.testSpecs(specs, tester, {});
-	helper.testSpecs(jsdocSpecs, tester, {jsdoc: true});
-	helper.testSpecs(htmlSpecs, tester, {htmlSafe: true, validate: false});
+	helper.testSpecs(jsdocSpecs, tester, { jsdoc: true });
+	helper.testSpecs(htmlSpecs, tester, { htmlSafe: true, validate: false });
 	helper.testSpecs(linkSpecs, tester, {
 		htmlSafe: true,
 		jsdoc: true,
