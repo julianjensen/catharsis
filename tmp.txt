@@ -8,175 +8,134 @@ running it on ts, data size: 31
 [0m  parser[0m
 [0m    parse()[0m
     [32m  ✓[0m[90m can parse types in the "basic" spec [0m
-    [32m  ✓[0m[90m can parse types in the "function-type" spec [0m[33m(43ms)[0m
+    [32m  ✓[0m[90m can parse types in the "function-type" spec [0m[33m(54ms)[0m
     [32m  ✓[0m[90m can parse types in the "nullable" spec [0m
     [32m  ✓[0m[90m can parse types in the "record-type" spec [0m
     [32m  ✓[0m[90m can parse types in the "type-application" spec [0m
-    [32m  ✓[0m[90m can parse types in the "type-intersection" spec [0m
+    [32m  ✓[0m[90m can parse types in the "type-intersection" spec [0m[33m(38ms)[0m
     [32m  ✓[0m[90m can parse types in the "type-tuple" spec [0m
     [32m  ✓[0m[90m can parse types in the "type-union" spec [0m
     [32m  ✓[0m[90m can parse types in the "jsdoc" spec when JSDoc type parsing is enabled [0m
 [0m    perse() external types[0m
 name: catharsis, count: 105, errors: 0
-    [32m  ✓[0m[90m can parse types from the catharsis list [0m[33m(61ms)[0m
+    [32m  ✓[0m[90m can parse types from the catharsis list [0m[33m(73ms)[0m
 ERROR: "!Function="
+   ast:
+ { type: 'NameExpression', name: 'Function', optional: true }
 
 
 ERROR: "!Object<string, function(string, ...)>"
+   ast:
+ { type: 'TypeApplication',
+  expression: { type: 'NameExpression', name: 'Object' },
+  applications: 
+   [ { type: 'NameExpression', name: 'string' },
+     { type: 'FunctionType',
+       params: 
+        [ { type: 'NameExpression', name: 'string' },
+          { repeatable: true, type: 'NullLiteral' },
+          [length]: 2 ] },
+     [length]: 2 ] }
 
 
 ERROR: "(function(number):?string)="
+   ast:
+ { type: 'FunctionType',
+  params: [ { type: 'NameExpression', name: 'number' }, [length]: 1 ],
+  result: { type: 'NameExpression', name: 'string', nullable: true },
+  optional: true }
 
 
 ERROR: "(function(string))?"
+   ast:
+ { type: 'FunctionType',
+  params: [ { type: 'NameExpression', name: 'string' }, [length]: 1 ],
+  nullable: true }
 
 
 ERROR: "(function(string): boolean)|undefined"
+   ast:
+ { type: 'TypeUnion',
+  elements: 
+   [ { type: 'FunctionType',
+       params: [ { type: 'NameExpression', name: 'string' }, [length]: 1 ],
+       result: { type: 'NameExpression', name: 'boolean' } },
+     { type: 'UndefinedLiteral' },
+     [length]: 2 ] }
 
 
 ERROR: "(function(string, *, *): ?string)="
+   ast:
+ { type: 'FunctionType',
+  params: 
+   [ { type: 'NameExpression', name: 'string' },
+     { type: 'AllLiteral' },
+     { type: 'AllLiteral' },
+     [length]: 3 ],
+  result: { type: 'NameExpression', name: 'string', nullable: true },
+  optional: true }
 
 
 ERROR: "?(function(this:THIS, *): *)="
+   ast:
+ { type: 'FunctionType',
+  params: [ { type: 'AllLiteral' }, [length]: 1 ],
+  result: { type: 'AllLiteral' },
+  this: { type: 'NameExpression', name: 'THIS' },
+  nullable: true,
+  optional: true }
 
 
 ERROR: "?(function(this:THIS, TYPE): VALUE)="
+   ast:
+ { type: 'FunctionType',
+  params: [ { type: 'NameExpression', name: 'TYPE' }, [length]: 1 ],
+  result: { type: 'NameExpression', name: 'VALUE' },
+  this: { type: 'NameExpression', name: 'THIS' },
+  nullable: true,
+  optional: true }
 
 
 ERROR: "?(function(this:THIS, TYPE):?)="
+   ast:
+ { type: 'FunctionType',
+  params: [ { type: 'NameExpression', name: 'TYPE' }, [length]: 1 ],
+  result: { type: 'UnknownLiteral' },
+  this: { type: 'NameExpression', name: 'THIS' },
+  nullable: true,
+  optional: true }
 
 
 ERROR: "?="
-
-
-ERROR: "?function(K, K): number="
    ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'K' },
-     { type: 'NameExpression', name: 'K' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  nullable: true,
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'K' },
-     { type: 'NameExpression', name: 'K' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true },
-  nullable: true }
-
-
-ERROR: "?function(T, T): number="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'T' },
-     { type: 'NameExpression', name: 'T' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  nullable: true,
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'T' },
-     { type: 'NameExpression', name: 'T' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true },
-  nullable: true }
-
-
-ERROR: "?function(T,T):number="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'T' },
-     { type: 'NameExpression', name: 'T' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  nullable: true,
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'T' },
-     { type: 'NameExpression', name: 'T' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true },
-  nullable: true }
+ { type: 'UnknownLiteral', optional: true }
 
 
 ERROR: "?function(this:T, ...)"
-
-
-ERROR: "Element|string|function():Element="
    ast:
- { type: 'TypeUnion',
-  elements: 
-   [ { type: 'NameExpression', name: 'Element' },
-     { type: 'NameExpression', name: 'string' },
-     { type: 'FunctionType',
-       params: [],
-       result: { type: 'NameExpression', name: 'Element' },
-       optional: true } ] }
-parsed:
- { type: 'TypeUnion',
-  elements: 
-   [ { type: 'NameExpression', name: 'Element' },
-     { type: 'NameExpression', name: 'string' },
-     { type: 'FunctionType',
-       params: [],
-       result: { type: 'NameExpression', name: 'Element', optional: true } } ] }
+ { type: 'FunctionType',
+  params: [ { repeatable: true, type: 'NullLiteral' }, [length]: 1 ],
+  this: { type: 'NameExpression', name: 'T' },
+  nullable: true }
 
 
 ERROR: "Function="
-
-
-ERROR: "function (string, string):?string="
    ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'string' },
-     { type: 'NameExpression', name: 'string' } ],
-  result: { type: 'NameExpression', name: 'string', nullable: true },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'string' },
-     { type: 'NameExpression', name: 'string' } ],
-  result: 
-   { type: 'NameExpression',
-     name: 'string',
-     optional: true,
-     nullable: true } }
-
-
-ERROR: "function(!Date):string="
-   ast:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'Date' } ],
-  result: { type: 'NameExpression', name: 'string' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'Date' } ],
-  result: { type: 'NameExpression', name: 'string', optional: true } }
-
-
-ERROR: "function():number="
-   ast:
- { type: 'FunctionType',
-  params: [],
-  result: { type: 'NameExpression', name: 'number' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [],
-  result: { type: 'NameExpression', name: 'number', optional: true } }
+ { type: 'NameExpression', name: 'Function', optional: true }
 
 
 ERROR: "function(...): boolean"
+   ast:
+ { type: 'FunctionType',
+  params: [ { repeatable: true, type: 'NullLiteral' }, [length]: 1 ],
+  result: { type: 'NameExpression', name: 'boolean' } }
 
 
 ERROR: "function(...): null"
+   ast:
+ { type: 'FunctionType',
+  params: [ { repeatable: true, type: 'NullLiteral' }, [length]: 1 ],
+  result: { type: 'NullLiteral' } }
 
 
 ERROR: "function(?):?|string"
@@ -184,17 +143,20 @@ ERROR: "function(?):?|string"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'UnknownLiteral' } ],
+       params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' } },
-     { type: 'NameExpression', name: 'string' } ] }
+     { type: 'NameExpression', name: 'string' },
+     [length]: 2 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
+  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
   result: 
    { type: 'TypeUnion',
      elements: 
       [ { type: 'UnknownLiteral' },
-        { type: 'NameExpression', name: 'string' } ] } }
+        { type: 'NameExpression', name: 'string' },
+        [length]: 2 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(?):?|{handleEvent:function(?):?}|null"
@@ -202,7 +164,7 @@ ERROR: "function(?):?|{handleEvent:function(?):?}|null"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'UnknownLiteral' } ],
+       params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' } },
      { type: 'RecordType',
        fields: 
@@ -210,12 +172,14 @@ ERROR: "function(?):?|{handleEvent:function(?):?}|null"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral' } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral' },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
+  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
   result: 
    { type: 'TypeUnion',
      elements: 
@@ -226,21 +190,12 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral' } ] } }
-
-
-ERROR: "function(?):K="
-   ast:
- { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
-  result: { type: 'NameExpression', name: 'K' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
-  result: { type: 'NameExpression', name: 'K', optional: true } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral' },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(?, ?, ?): number | function(?, ?): number"
@@ -251,24 +206,38 @@ ERROR: "function(?, ?, ?): number | function(?, ?): number"
        params: 
         [ { type: 'UnknownLiteral' },
           { type: 'UnknownLiteral' },
-          { type: 'UnknownLiteral' } ],
+          { type: 'UnknownLiteral' },
+          [length]: 3 ],
        result: { type: 'NameExpression', name: 'number' } },
      { type: 'FunctionType',
-       params: [ { type: 'UnknownLiteral' }, { type: 'UnknownLiteral' } ],
-       result: { type: 'NameExpression', name: 'number' } } ] }
+       params: 
+        [ { type: 'UnknownLiteral' },
+          { type: 'UnknownLiteral' },
+          [length]: 2 ],
+       result: { type: 'NameExpression', name: 'number' } },
+     [length]: 2 ] }
 parsed:
  { type: 'FunctionType',
   params: 
    [ { type: 'UnknownLiteral' },
      { type: 'UnknownLiteral' },
-     { type: 'UnknownLiteral' } ],
+     { type: 'UnknownLiteral' },
+     [length]: 3 ],
   result: 
    { type: 'TypeUnion',
      elements: 
       [ { type: 'NameExpression', name: 'number' },
         { type: 'FunctionType',
-          params: [ { type: 'UnknownLiteral' }, { type: 'UnknownLiteral' } ],
-          result: { type: 'NameExpression', name: 'number' } } ] } }
+          params: 
+           [ { type: 'UnknownLiteral' },
+             { type: 'UnknownLiteral' },
+             [length]: 2 ],
+          result: 
+           { type: 'NameExpression',
+             name: 'number',
+             [FunctionSignatureType]: undefined } },
+        [length]: 2 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(EVENTOBJ):?|{handleEvent:function(?):?}|null="
@@ -276,7 +245,7 @@ ERROR: "function(EVENTOBJ):?|{handleEvent:function(?):?}|null="
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+       params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' } },
      { type: 'RecordType',
        fields: 
@@ -284,12 +253,14 @@ ERROR: "function(EVENTOBJ):?|{handleEvent:function(?):?}|null="
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral', optional: true } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral', optional: true },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+  params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
   result: 
    { type: 'TypeUnion',
      elements: 
@@ -300,9 +271,12 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral', optional: true } ] } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral', optional: true },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(EVENTOBJ):?|{handleEvent:function(?):?}|null"
@@ -310,7 +284,7 @@ ERROR: "function(EVENTOBJ):?|{handleEvent:function(?):?}|null"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+       params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' } },
      { type: 'RecordType',
        fields: 
@@ -318,12 +292,14 @@ ERROR: "function(EVENTOBJ):?|{handleEvent:function(?):?}|null"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral' } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral' },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+  params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
   result: 
    { type: 'TypeUnion',
      elements: 
@@ -334,155 +310,42 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral' } ] } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral' },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(Element):Element?"
    ast:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'Element' } ],
+  params: [ { type: 'NameExpression', name: 'Element' }, [length]: 1 ],
   result: { type: 'NameExpression', name: 'Element' },
   nullable: true }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'Element' } ],
-  result: { type: 'NameExpression', name: 'Element', nullable: true } }
-
-
-ERROR: "function(T):string="
-   ast:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'T' } ],
-  result: { type: 'NameExpression', name: 'string' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'T' } ],
-  result: { type: 'NameExpression', name: 'string', optional: true } }
-
-
-ERROR: "function(TARGET, VALUE): number="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'TARGET' },
-     { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'TARGET' },
-     { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true } }
-
-
-ERROR: "function(V, V): boolean="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'V' },
-     { type: 'NameExpression', name: 'V' } ],
-  result: { type: 'NameExpression', name: 'boolean' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'V' },
-     { type: 'NameExpression', name: 'V' } ],
-  result: { type: 'NameExpression', name: 'boolean', optional: true } }
-
-
-ERROR: "function(VALUE): KEY="
-   ast:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'KEY' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'KEY', optional: true } }
-
-
-ERROR: "function(VALUE, VALUE): number="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'VALUE' },
-     { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'VALUE' },
-     { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true } }
-
-
-ERROR: "function(VALUE,VALUE):boolean="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'VALUE' },
-     { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'boolean' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'VALUE' },
-     { type: 'NameExpression', name: 'VALUE' } ],
-  result: { type: 'NameExpression', name: 'boolean', optional: true } }
+  params: [ { type: 'NameExpression', name: 'Element' }, [length]: 1 ],
+  result: 
+   { type: 'NameExpression',
+     name: 'Element',
+     nullable: true,
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(new: T, ...)"
+   ast:
+ { type: 'FunctionType',
+  params: [ { repeatable: true, type: 'NullLiteral' }, [length]: 1 ],
+  new: { type: 'NameExpression', name: 'T' } }
 
 
 ERROR: "function(new:T, ...)"
-
-
-ERROR: "function(number) : number="
    ast:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'number' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'number' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true } }
-
-
-ERROR: "function(number):number="
-   ast:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'number' } ],
-  result: { type: 'NameExpression', name: 'number' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'number' } ],
-  result: { type: 'NameExpression', name: 'number', optional: true } }
-
-
-ERROR: "function(number, Object): string="
-   ast:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'number' },
-     { type: 'NameExpression', name: 'Object' } ],
-  result: { type: 'NameExpression', name: 'string' },
-  optional: true }
-parsed:
- { type: 'FunctionType',
-  params: 
-   [ { type: 'NameExpression', name: 'number' },
-     { type: 'NameExpression', name: 'Object' } ],
-  result: { type: 'NameExpression', name: 'string', optional: true } }
+  params: [ { repeatable: true, type: 'NullLiteral' }, [length]: 1 ],
+  new: { type: 'NameExpression', name: 'T' } }
 
 
 ERROR: "function(this:SCOPE, ?):?|{handleEvent:function(?):?}|null"
@@ -490,7 +353,7 @@ ERROR: "function(this:SCOPE, ?):?|{handleEvent:function(?):?}|null"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'UnknownLiteral' } ],
+       params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' },
        this: { type: 'NameExpression', name: 'SCOPE' } },
      { type: 'RecordType',
@@ -499,12 +362,14 @@ ERROR: "function(this:SCOPE, ?):?|{handleEvent:function(?):?}|null"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral' } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral' },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
+  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
   this: { type: 'NameExpression', name: 'SCOPE' },
   result: 
    { type: 'TypeUnion',
@@ -516,9 +381,12 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral' } ] } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral' },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null="
@@ -526,7 +394,7 @@ ERROR: "function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null="
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+       params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' },
        this: { type: 'NameExpression', name: 'SCOPE' } },
      { type: 'RecordType',
@@ -535,12 +403,14 @@ ERROR: "function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null="
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral', optional: true } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral', optional: true },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+  params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
   this: { type: 'NameExpression', name: 'SCOPE' },
   result: 
    { type: 'TypeUnion',
@@ -552,9 +422,12 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral', optional: true } ] } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral', optional: true },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(this:T, ?):?|{handleEvent:function(?):?}|null"
@@ -562,7 +435,7 @@ ERROR: "function(this:T, ?):?|{handleEvent:function(?):?}|null"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'UnknownLiteral' } ],
+       params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' },
        this: { type: 'NameExpression', name: 'T' } },
      { type: 'RecordType',
@@ -571,12 +444,14 @@ ERROR: "function(this:T, ?):?|{handleEvent:function(?):?}|null"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral' } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral' },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
+  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
   this: { type: 'NameExpression', name: 'T' },
   result: 
    { type: 'TypeUnion',
@@ -588,9 +463,12 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral' } ] } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral' },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(this:T, ?):?|{handleEvent:function(this:T, ?):?}|null"
@@ -598,7 +476,7 @@ ERROR: "function(this:T, ?):?|{handleEvent:function(this:T, ?):?}|null"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'UnknownLiteral' } ],
+       params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' },
        this: { type: 'NameExpression', name: 'T' } },
      { type: 'RecordType',
@@ -607,13 +485,15 @@ ERROR: "function(this:T, ?):?|{handleEvent:function(this:T, ?):?}|null"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
                result: { type: 'UnknownLiteral' },
-               this: { type: 'NameExpression', name: 'T' } } } ] },
-     { type: 'NullLiteral' } ] }
+               this: { type: 'NameExpression', name: 'T' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral' },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'UnknownLiteral' } ],
+  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
   this: { type: 'NameExpression', name: 'T' },
   result: 
    { type: 'TypeUnion',
@@ -625,10 +505,13 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
                   this: { type: 'NameExpression', name: 'T' },
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral' } ] } }
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral' },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(this:T, EVENTOBJ):?|{handleEvent:function(?):?}|null"
@@ -636,7 +519,7 @@ ERROR: "function(this:T, EVENTOBJ):?|{handleEvent:function(?):?}|null"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+       params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' },
        this: { type: 'NameExpression', name: 'T' } },
      { type: 'RecordType',
@@ -645,12 +528,14 @@ ERROR: "function(this:T, EVENTOBJ):?|{handleEvent:function(?):?}|null"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
-               result: { type: 'UnknownLiteral' } } } ] },
-     { type: 'NullLiteral' } ] }
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+               result: { type: 'UnknownLiteral' } } },
+          [length]: 1 ] },
+     { type: 'NullLiteral' },
+     [length]: 3 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+  params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
   this: { type: 'NameExpression', name: 'T' },
   result: 
    { type: 'TypeUnion',
@@ -662,9 +547,12 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
-                  result: { type: 'UnknownLiteral' } } } ] },
-        { type: 'NullLiteral' } ] } }
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        { type: 'NullLiteral' },
+        [length]: 3 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}"
@@ -672,7 +560,7 @@ ERROR: "function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'FunctionType',
-       params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+       params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
        result: { type: 'UnknownLiteral' },
        this: { type: 'NameExpression', name: 'T' } },
      { type: 'RecordType',
@@ -681,12 +569,14 @@ ERROR: "function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}"
             key: { type: 'NameExpression', name: 'handleEvent' },
             value: 
              { type: 'FunctionType',
-               params: [ { type: 'UnknownLiteral' } ],
+               params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
                result: { type: 'UnknownLiteral' },
-               this: { type: 'NameExpression', name: 'T' } } } ] } ] }
+               this: { type: 'NameExpression', name: 'T' } } },
+          [length]: 1 ] },
+     [length]: 2 ] }
 parsed:
  { type: 'FunctionType',
-  params: [ { type: 'NameExpression', name: 'EVENTOBJ' } ],
+  params: [ { type: 'NameExpression', name: 'EVENTOBJ' }, [length]: 1 ],
   this: { type: 'NameExpression', name: 'T' },
   result: 
    { type: 'TypeUnion',
@@ -698,12 +588,22 @@ parsed:
                key: { type: 'NameExpression', name: 'handleEvent' },
                value: 
                 { type: 'FunctionType',
-                  params: [ { type: 'UnknownLiteral' } ],
+                  params: [ { type: 'UnknownLiteral' }, [length]: 1 ],
                   this: { type: 'NameExpression', name: 'T' },
-                  result: { type: 'UnknownLiteral' } } } ] } ] } }
+                  result: { type: 'UnknownLiteral', [FunctionSignatureType]: undefined } } },
+             [length]: 1 ] },
+        [length]: 2 ],
+     [FunctionSignatureType]: undefined } }
 
 
 ERROR: "goog.testing.mockmatchers.ArgumentMatcher|Function="
+   ast:
+ { type: 'TypeUnion',
+  elements: 
+   [ { type: 'NameExpression',
+       name: 'goog.testing.mockmatchers.ArgumentMatcher' },
+     { type: 'NameExpression', name: 'Function', optional: true },
+     [length]: 2 ] }
 
 
 ERROR: "{'args': !Array<string>, 'timestamp': number}"
@@ -715,10 +615,11 @@ ERROR: "{'args': !Array<string>, 'timestamp': number}"
        value: 
         { type: 'TypeApplication',
           expression: { type: 'NameExpression', name: 'Array' },
-          applications: [ { type: 'NameExpression', name: 'string' } ] } },
+          applications: [ { type: 'NameExpression', name: 'string' }, [length]: 1 ] } },
      { type: 'FieldType',
        key: { type: 'NameExpression', name: 'timestamp' },
-       value: { type: 'NameExpression', name: 'number' } } ] }
+       value: { type: 'NameExpression', name: 'number' } },
+     [length]: 2 ] }
 parsed:
  { type: 'RecordType',
   fields: 
@@ -727,10 +628,11 @@ parsed:
        value: 
         { type: 'TypeApplication',
           expression: { type: 'NameExpression', name: 'Array' },
-          applications: [ { type: 'NameExpression', name: 'string' } ] } },
+          applications: [ { type: 'NameExpression', name: 'string' }, [length]: 1 ] } },
      { type: 'FieldType',
        key: { type: 'NameExpression', name: '\'timestamp\'' },
-       value: { type: 'NameExpression', name: 'number' } } ] }
+       value: { type: 'NameExpression', name: 'number' } },
+     [length]: 2 ] }
 
 
 ERROR: "{'timestamp': number, 'args': !Array<string>}"
@@ -745,7 +647,8 @@ ERROR: "{'timestamp': number, 'args': !Array<string>}"
        value: 
         { type: 'TypeApplication',
           expression: { type: 'NameExpression', name: 'Array' },
-          applications: [ { type: 'NameExpression', name: 'string' } ] } } ] }
+          applications: [ { type: 'NameExpression', name: 'string' }, [length]: 1 ] } },
+     [length]: 2 ] }
 parsed:
  { type: 'RecordType',
   fields: 
@@ -757,14 +660,21 @@ parsed:
        value: 
         { type: 'TypeApplication',
           expression: { type: 'NameExpression', name: 'Array' },
-          applications: [ { type: 'NameExpression', name: 'string' } ] } } ] }
+          applications: [ { type: 'NameExpression', name: 'string' }, [length]: 1 ] } },
+     [length]: 2 ] }
 
 
-name: closure-library, count: 2599, errors: 48
-    [32m  ✓[0m[90m can parse types from the closure-library list [0m[31m(598ms)[0m
+name: closure-library, count: 2599, errors: 31
+    [32m  ✓[0m[90m can parse types from the closure-library list [0m[31m(849ms)[0m
 name: jsdoc, count: 109, errors: 0
     [32m  ✓[0m[90m can parse types from the jsdoc list [0m
 ERROR: ""up"/"down""
+   ast:
+ { type: 'TypeUnion',
+  elements: 
+   [ { type: 'NameExpression', name: '"up"' },
+     { type: 'NameExpression', name: '"down"' },
+     [length]: 2 ] }
 
 
 ERROR: "HTMLElement/Ext.Element"
@@ -772,7 +682,8 @@ ERROR: "HTMLElement/Ext.Element"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'NameExpression', name: 'HTMLElement' },
-     { type: 'NameExpression', name: 'Ext.Element' } ] }
+     { type: 'NameExpression', name: 'Ext.Element' },
+     [length]: 2 ] }
 parsed:
  { type: 'NameExpression', name: 'HTMLElement/Ext.Element' }
 
@@ -782,18 +693,30 @@ ERROR: "HTMLElement/Ext.core.Element"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'NameExpression', name: 'HTMLElement' },
-     { type: 'NameExpression', name: 'Ext.core.Element' } ] }
+     { type: 'NameExpression', name: 'Ext.core.Element' },
+     [length]: 2 ] }
 parsed:
  { type: 'NameExpression', name: 'HTMLElement/Ext.core.Element' }
 
 
 ERROR: "Mixed..."
+   ast:
+ { type: 'NameExpression', name: 'Mixed', repeatable: true }
 
 
 ERROR: "Number..."
+   ast:
+ { type: 'NameExpression', name: 'Number', repeatable: true }
 
 
 ERROR: "Number/Object..."
+   ast:
+ { type: 'TypeUnion',
+  elements: 
+   [ { type: 'NameExpression', name: 'Number' },
+     { type: 'NameExpression', name: 'Object' },
+     [length]: 2 ],
+  repeatable: true }
 
 
 ERROR: "Number/String"
@@ -801,15 +724,20 @@ ERROR: "Number/String"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'NameExpression', name: 'Number' },
-     { type: 'NameExpression', name: 'String' } ] }
+     { type: 'NameExpression', name: 'String' },
+     [length]: 2 ] }
 parsed:
  { type: 'NameExpression', name: 'Number/String' }
 
 
 ERROR: "Object..."
+   ast:
+ { type: 'NameExpression', name: 'Object', repeatable: true }
 
 
 ERROR: "String..."
+   ast:
+ { type: 'NameExpression', name: 'String', repeatable: true }
 
 
 ERROR: "String/Function"
@@ -817,7 +745,8 @@ ERROR: "String/Function"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'NameExpression', name: 'String' },
-     { type: 'NameExpression', name: 'Function' } ] }
+     { type: 'NameExpression', name: 'Function' },
+     [length]: 2 ] }
 parsed:
  { type: 'NameExpression', name: 'String/Function' }
 
@@ -828,7 +757,8 @@ ERROR: "String/HTMLElement/Ext.Element"
   elements: 
    [ { type: 'NameExpression', name: 'String' },
      { type: 'NameExpression', name: 'HTMLElement' },
-     { type: 'NameExpression', name: 'Ext.Element' } ] }
+     { type: 'NameExpression', name: 'Ext.Element' },
+     [length]: 3 ] }
 parsed:
  { type: 'NameExpression',
   name: 'String/HTMLElement/Ext.Element' }
@@ -839,7 +769,8 @@ ERROR: "String/RegExp"
  { type: 'TypeUnion',
   elements: 
    [ { type: 'NameExpression', name: 'String' },
-     { type: 'NameExpression', name: 'RegExp' } ] }
+     { type: 'NameExpression', name: 'RegExp' },
+     [length]: 2 ] }
 parsed:
  { type: 'NameExpression', name: 'String/RegExp' }
 
@@ -850,5 +781,5 @@ name: ts, count: 31, errors: 0
     [32m  ✓[0m[90m can parse types from the ts list [0m
 
 
-[92m [0m[32m 14 passing[0m[90m (889ms)[0m
+[92m [0m[32m 14 passing[0m[90m (1s)[0m
 

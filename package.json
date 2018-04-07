@@ -27,7 +27,8 @@
     "lint": "eslint --ignore-pattern lib/parser.js \"{lib,test}/**/*.js\"",
     "fixlint": "eslint --fix --ignore-pattern lib/parser.js \"{lib,test}/**/*.js\"",
     "build": "./node_modules/pegjs/bin/pegjs ./lib/parser.pegjs",
-    "prepare": "npm run build && npm run lint && npm run test"
+    "prepare": "npm run build",
+    "prepare1": "npm run build && npm run lint && npm run test"
   },
   "license": "MIT"
 }

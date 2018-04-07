@@ -1,0 +1,175 @@
+dependencies:
+  lodash: 4.17.5
+devDependencies:
+  ajv: 5.2.5
+  mocha: 2.0.1
+  pegjs: 0.10.0
+  should: 4.0.4
+packages:
+  /ajv/5.2.5:
+    dependencies:
+      co: 4.6.0
+      fast-deep-equal: 1.1.0
+      json-schema-traverse: 0.3.1
+      json-stable-stringify: 1.0.1
+    dev: true
+    resolution:
+      integrity: sha1-tjcjTT4mdetfefxlIkKoU6SMtJ8=
+  /co/4.6.0:
+    dev: true
+    engines:
+      iojs: '>= 1.0.0'
+      node: '>= 0.12.0'
+    resolution:
+      integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
+  /commander/0.6.1:
+    dev: true
+    engines:
+      node: '>= 0.4.x'
+    resolution:
+      integrity: sha1-+mihT2qUXVTbvlDYzbMyDp47GgY=
+  /commander/2.3.0:
+    dev: true
+    engines:
+      node: '>= 0.6.x'
+    resolution:
+      integrity: sha1-/UMOiJgy7DU7ms0d4hfBHLPu+HM=
+  /debug/2.0.0:
+    dependencies:
+      ms: 0.6.2
+    dev: true
+    resolution:
+      integrity: sha1-ib2d9nMrUSVrxnBTQrugLtEhMe8=
+  /diff/1.0.8:
+    dev: true
+    engines:
+      node: '>=0.3.1'
+    resolution:
+      integrity: sha1-NDJ2MI7Jkbe8giZ+1VvBQR+XFmY=
+  /escape-string-regexp/1.0.2:
+    dev: true
+    engines:
+      node: '>=0.8.0'
+    resolution:
+      integrity: sha1-Tbwv5nTnGUnK8/smlc5/LcHZqNE=
+  /fast-deep-equal/1.1.0:
+    dev: true
+    resolution:
+      integrity: sha1-wFNHeBfIa1HaqFPIHgWbcz0CNhQ=
+  /glob/3.2.3:
+    dependencies:
+      graceful-fs: 2.0.3
+      inherits: 2.0.3
+      minimatch: 0.2.14
+    dev: true
+    resolution:
+      integrity: sha1-4xPusknHr/qlxHUoaw4RW1mDlGc=
+  /graceful-fs/2.0.3:
+    deprecated: please upgrade to graceful-fs 4 for compatibility with current and future versions of Node.js
+    dev: true
+    engines:
+      node: '>=0.4.0'
+    resolution:
+      integrity: sha1-fNLNsiiko/Nule+mzBQt59GhNtA=
+  /growl/1.8.1:
+    dev: true
+    resolution:
+      integrity: sha1-Sy3sjZB+k9szZiTc7AGDUC+MlCg=
+  /inherits/2.0.3:
+    dev: true
+    resolution:
+      integrity: sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
+  /jade/0.26.3:
+    dependencies:
+      commander: 0.6.1
+      mkdirp: 0.3.0
+    deprecated: 'Jade has been renamed to pug, please install the latest version of pug instead of jade'
+    dev: true
+    resolution:
+      integrity: sha1-jxDXl32NefL2/4YqgbBRPMslaGw=
+  /json-schema-traverse/0.3.1:
+    dev: true
+    resolution:
+      integrity: sha1-NJptRMU6Ud6JtAgFxdXlm0F9M0A=
+  /json-stable-stringify/1.0.1:
+    dependencies:
+      jsonify: 0.0.0
+    dev: true
+    resolution:
+      integrity: sha1-mnWdOcXy/1A/1TAGRu1EX4jE+a8=
+  /jsonify/0.0.0:
+    dev: true
+    resolution:
+      integrity: sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+  /lodash/4.17.5:
+    dev: false
+    resolution:
+      integrity: sha512-svL3uiZf1RwhH+cWrfZn3A4+U58wbP0tGVTLQPbjplZxZ8ROD9VLuNgsRniTlLe7OlSqR79RUehXgpBW/s0IQw==
+  /lru-cache/2.7.3:
+    dev: true
+    resolution:
+      integrity: sha1-bUUk6LlV+V1PW1iFHOId1y+06VI=
+  /minimatch/0.2.14:
+    dependencies:
+      lru-cache: 2.7.3
+      sigmund: 1.0.1
+    deprecated: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
+    dev: true
+    resolution:
+      integrity: sha1-x054BXT2PG+aCQ6Q775u9TpqdWo=
+  /minimist/0.0.8:
+    dev: true
+    resolution:
+      integrity: sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
+  /mkdirp/0.3.0:
+    dev: true
+    resolution:
+      integrity: sha1-G79asbqCevI1dRQ0kEJkVfSB/h4=
+  /mkdirp/0.5.0:
+    dependencies:
+      minimist: 0.0.8
+    dev: true
+    resolution:
+      integrity: sha1-HXMHam35hs2TROFecfzAWkyavxI=
+  /mocha/2.0.1:
+    dependencies:
+      commander: 2.3.0
+      debug: 2.0.0
+      diff: 1.0.8
+      escape-string-regexp: 1.0.2
+      glob: 3.2.3
+      growl: 1.8.1
+      jade: 0.26.3
+      mkdirp: 0.5.0
+    dev: true
+    engines:
+      node: '>= 0.8.x'
+    resolution:
+      integrity: sha1-Whboi4VtDEFF2MaIjCfr1PqxPpA=
+  /ms/0.6.2:
+    dev: true
+    resolution:
+      integrity: sha1-2JwhJMb9wTU9Zai3e/GqxLGTcIw=
+  /pegjs/0.10.0:
+    dev: true
+    engines:
+      node: '>=0.10'
+    resolution:
+      integrity: sha1-z4uvrm7d/0tafvsYUmnqr0YQ3b0=
+  /should/4.0.4:
+    dev: true
+    resolution:
+      integrity: sha1-jvqjBPHxSM89LpVYYpkPmrnqYo8=
+  /sigmund/1.0.1:
+    dev: true
+    resolution:
+      integrity: sha1-P/IfGYytIXX587eBhT/ZTQ0ZtZA=
+registry: 'https://registry.npmjs.org/'
+shrinkwrapMinorVersion: 4
+shrinkwrapVersion: 3
+specifiers:
+  ajv: ~5.2.2
+  lodash: ~4.17.4
+  mocha: ~2.0.1
+  pegjs: ~0.10.0
+  should: ~4.0.4
