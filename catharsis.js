@@ -68,7 +68,7 @@ function canReturnOriginalExpression(parsedType, options) {
 // Add non-enumerable properties to a result object, then freeze it.
 function prepareFrozenObject(obj, expr, options) {
 	Object.defineProperty(obj, 'jsdoc', {
-		value: options.jsdoc === true ? true : false
+		value: options.jsdoc === true
 	});
 
 	if (expr) {

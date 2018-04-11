@@ -5,7 +5,10 @@ var _ = require('lodash');
 var Ajv = require('ajv');
 var fs = require('fs');
 var helper = require('./helper');
-var parse = require('../lib/parser').parse;
+
+var useNew = true;
+var parserPath = useNew ? '../lib/parser.alt' : '../lib/parser';
+var parse = require(parserPath).parse;
 var path = require('path');
 var schema = require('../lib/schema');
 var should = require('should');
@@ -41,10 +44,11 @@ function remove_nullable(obj) {
 
     Object.keys(descs).forEach(key => {
         if (obj[key] !== null) {
-            if (descs[key].enumerable)
+            if (descs[key].enumerable) {
                 no[key] = remove_nullable(obj[key]);
-            else
+            } else {
                 Object.defineProperty(no, key, { enumerable: false, value: remove_nullable(obj[key]) });
+            }
         }
     });
 
@@ -65,8 +69,7 @@ function parseIt(item, options) {
         // console.log( `DONE:`, parsed );
     }
     catch (e) {
-        throw new Error(util.format('unable to parse type expression "%s": %s', item.expression,
-            e.message));
+        throw new Error( `unable to parse type expression '${item.expression}': ${e.message}` );
     }
 
     // if (!_.isEqual(parsed, item.parsed)) {
