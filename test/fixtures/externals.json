@@ -6785,8 +6785,7 @@
                             "name": "string"
                         },
                         {
-                            "repeatable": true,
-                            "type": "NullLiteral"
+                            "repeatable": true
                         }
                     ],
                     "result": null,
@@ -15611,8 +15610,7 @@
             "type": "FunctionType",
             "params": [
                 {
-                    "repeatable": true,
-                    "type": "NullLiteral"
+                    "repeatable": true
                 }
             ],
             "result": null,
@@ -23781,8 +23779,7 @@
             "type": "FunctionType",
             "params": [
                 {
-                    "repeatable": true,
-                    "type": "NullLiteral"
+                    "repeatable": true
                 }
             ],
             "result": {
@@ -23800,8 +23797,7 @@
             "type": "FunctionType",
             "params": [
                 {
-                    "repeatable": true,
-                    "type": "NullLiteral"
+                    "repeatable": true
                 }
             ],
             "result": {
@@ -24901,8 +24897,7 @@
             "type": "FunctionType",
             "params": [
                 {
-                    "repeatable": true,
-                    "type": "NullLiteral"
+                    "repeatable": true
                 }
             ],
             "result": null,
@@ -24979,8 +24974,7 @@
             "type": "FunctionType",
             "params": [
                 {
-                    "repeatable": true,
-                    "type": "NullLiteral"
+                    "repeatable": true
                 }
             ],
             "result": null,

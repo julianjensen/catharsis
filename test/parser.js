@@ -39,6 +39,12 @@ function remove_nullable(obj) {
         delete obj.nullable;
     }
 
+    if ( ( obj.type === 'TypeUnion' || obj.type === 'TypeIntersection' )&& obj.elements[ obj.elements.length - 1 ].optional )
+    {
+        obj.optional = true;
+        delete obj.elements[ obj.elements.length - 1 ].optional;
+    }
+
     let no    = {},
         descs = Object.getOwnPropertyDescriptors(obj);
 
@@ -129,7 +135,7 @@ describe('parser', function() {
         helper.testSpecs(jsdocSpecs, jsdocTester);
     });
 
-    describe('perse() external types', function() {
+    describe('parse() external types', function() {
 
         function test_block(testData) {
             let testCount = 0,
@@ -151,7 +157,7 @@ describe('parser', function() {
                         should(ast).eql(parsed);
                     }
                     catch (err) {
-                        console.log(`ERROR: "${expression}"`);
+                        console.log(`ERROR: ;${expression};`);
                         if (errorInfo) {
                             console.log('   ast:\n', util.inspect(errorInfo.ast, { depth: 10, colors: false, showHidden: true }));
                             console.log('parsed:\n', util.inspect(errorInfo.parsed, { depth: 10, colors: false, showHidden: true }));
